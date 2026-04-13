@@ -47,7 +47,7 @@ public class Main {
 
             boolean success = login.loginUser(user, pass);
 
-            String message = login.returnLoginStatus(success, "John", "Doe");
+            String message = login.returnLoginStatus(success, firstName, lastName);
             System.out.println(message);
         }
 
