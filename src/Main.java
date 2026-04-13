@@ -35,7 +35,7 @@ public class Main {
         String result = login.registerUser(username, password, cell);
         System.out.println(result);
 
-        if (result.equals("Registration successful.")) {
+        if (result.equals("Your Registration Was successful.")) {
 
             System.out.println("\n=== Login ===");
 
