@@ -16,6 +16,12 @@ public class Main {
         Login login = new Login();
 
         System.out.println("=== Registration ===");
+        
+        System.out.print("Enter first name: ");
+        String firstName = input.nextLine();
+
+        System.out.print("Enter last name: ");
+        String lastName = input.nextLine();
 
         System.out.print("Enter username: ");
         String username = input.nextLine();
