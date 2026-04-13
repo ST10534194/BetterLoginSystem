@@ -29,7 +29,7 @@ public class Main {
         System.out.print("Enter password: ");
         String password = input.nextLine();
 
-        System.out.print("Enter SA cell number (+27...): ");
+        System.out.print("Enter SA cell number (Must Begin With +27...): ");
         String cell = input.nextLine();
 
         String result = login.registerUser(username, password, cell);
