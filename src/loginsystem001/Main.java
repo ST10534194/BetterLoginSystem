@@ -26,10 +26,10 @@ public class Main {
         System.out.print("Enter last name: ");
         String lastName = input.nextLine();
 
-        System.out.print("Enter username: ");
+        System.out.print("Enter username (Must include _ and be max 5 chars.: ");
         String username = input.nextLine();
 
-        System.out.print("Enter password: ");
+        System.out.print("Enter password (Min 8 chars with capital, number & special char.): ");
         String password = input.nextLine();
 
         System.out.print("Enter SA cell number (Must Begin With +27...): ");
