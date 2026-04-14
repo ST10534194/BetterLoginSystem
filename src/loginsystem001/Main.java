@@ -1,3 +1,5 @@
+package loginsystem001;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -7,6 +9,7 @@
  *
  * @author Student
  */
+import loginsystem001.Login;
 import java.util.Scanner;
 
 public class Main {
@@ -35,7 +38,7 @@ public class Main {
         String result = login.registerUser(username, password, cell);
         System.out.println(result);
 
-        if (result.equals("Your Registration Was successful.")) {
+        if (result.equals("Your Registration was successful.")) {
 
             System.out.println("\n=== Login ===");
 
