@@ -52,7 +52,7 @@ public class Login {
         this.username = username;
         this.password = password;
         this.cellPhone = cellPhone;
-        return "Registration successful.";
+        return "Your Registration was successful.";
     }
 
     public boolean loginUser(String username, String password) {
