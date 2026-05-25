@@ -81,8 +81,13 @@ public class Main {
                     switch (choice) {
 
                         case 1:
+                            // Check if the set number of messages has already been reached
+                            if (totalSent >= numMessages) {
+                                System.out.println("\nMessage limit reached.");
+                                break; 
+                            }
 
-                            for (int i = 0; i < numMessages; i++) {
+                            for (int i = totalSent; i < numMessages; i++) {
 
                                 Message msg = new Message();
 
@@ -120,8 +125,6 @@ public class Main {
                             }
 
                             System.out.println("\nTotal messages sent: " + totalSent);
-                          
-
                             break;
 
                         case 2:
