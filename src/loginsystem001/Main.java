@@ -81,7 +81,7 @@ public class Main {
                     switch (choice) {
 
                         case 1:
-                            // Check if the set number of messages has already been reached
+                            // Rule 5 Check: Instantly blocks the user if their limit has been met
                             if (totalSent >= numMessages) {
                                 System.out.println("\nMessage limit reached.");
                                 break; 
@@ -114,14 +114,13 @@ public class Main {
                                 String sendResult = msg.sentMessage(sendOption);
                                 System.out.println(sendResult);
 
-                                if (sendOption == 1) {
+                                // Counts the completed action toward your limit boundary
+                                if (sendOption == 1 || sendOption == 2 || sendOption == 3) {
                                     totalSent++;
                                 }
 
                                 System.out.println("\n===== MESSAGE DETAILS =====");
                                 System.out.println(msg.printMessages());
-
-                                System.out.println("Message Hash: " + msg.getMessageHash());
                             }
 
                             System.out.println("\nTotal messages sent: " + totalSent);

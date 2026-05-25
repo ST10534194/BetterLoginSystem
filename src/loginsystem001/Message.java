@@ -8,6 +8,8 @@ package loginsystem001;
  *
  * @author Student
  */
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class Message {
@@ -19,16 +21,13 @@ public class Message {
     private String messageText;
     private String messageHash;
 
-    
     public String generateMessageID() {
         Random random = new Random();
         long number = 1000000000L + (long)(random.nextDouble() * 9000000000L);
         return String.valueOf(number);
     }
 
-    
     public String checkMessage(String message) {
-
         if (message.length() <= 250) {
             return "Message ready to send.";
         } else {
@@ -37,9 +36,7 @@ public class Message {
         }
     }
 
-    
     public String checkRecipientCell(String recipient) {
-
         if (recipient.matches("^\\+27\\d{9}$")) {
             return "Cell phone number successfully captured.";
         } else {
@@ -47,11 +44,8 @@ public class Message {
         }
     }
 
-    
     public String createMessageHash(String messageID, int messageNumber, String message) {
-
         String[] words = message.split(" ");
-
         String firstWord = words[0];
         String lastWord = words[words.length - 1];
 
@@ -63,38 +57,48 @@ public class Message {
         return hash;
     }
 
-    
-    public String sentMessage(int option) {
+    // Research assignment requirement: Stores message contents into a JSON file structure
+    public void storeMessage() {
+        String jsonFormat = "{\n" +
+                            "  \"messageId\": \"" + this.messageID + "\",\n" +
+                            "  \"messageHash\": \"" + this.messageHash + "\",\n" +
+                            "  \"recipient\": \"" + this.recipient + "\",\n" +
+                            "  \"text\": \"" + this.messageText + "\"\n" +
+                            "}\n";
 
+        try (FileWriter file = new FileWriter("stored_messages.json", true)) {
+            file.write(jsonFormat);
+        } catch (IOException e) {
+            System.out.println("Error saving message to JSON: " + e.getMessage());
+        }
+    }
+
+    public String sentMessage(int option) {
         if (option == 1) {
             totalMessages++;
             return "Message successfully sent.";
         } else if (option == 2) {
             return "Press 0 to delete message.";
         } else if (option == 3) {
+            storeMessage(); // <--- Automatically triggers the JSON file generation
             return "Message successfully stored.";
         } else {
             return "Invalid option.";
         }
     }
 
-   
     public String printMessages() {
-
         return "Message ID: " + messageID
                 + "\nMessage Hash: " + messageHash
                 + "\nRecipient: " + recipient
                 + "\nMessage: " + messageText;
     }
 
-    
     public int returnTotalMessages() {
         return totalMessages;
     }
 
-   
     public void setMessageDetails(String recipient, String messageText, int messageNumber) {
-
         this.messageID = generateMessageID();
         this.recipient = recipient;
         this.messageText = messageText;
