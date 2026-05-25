@@ -33,7 +33,7 @@ public class Message {
             return "Message ready to send.";
         } else {
             int excess = message.length() - 250;
-            return "Message exceeds 250 characters by " + excess + ", please reduce the size.";
+            return "Message exceeds 250 characters by " + excess + ", please enter a message less than 250 characters. ";
         }
     }
 

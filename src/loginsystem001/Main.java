@@ -86,12 +86,12 @@ public class Main {
 
                                 Message msg = new Message();
 
-                                System.out.print("Enter recipient number: ");
+                                System.out.print("Enter recipient number (Should Start With +27): ");
                                 String recipient = input.nextLine();
 
                                 System.out.println(msg.checkRecipientCell(recipient));
 
-                                System.out.print("Enter your message: ");
+                                System.out.print("Enter your message (Should Not Exceed 250 Character): ");
                                 String text = input.nextLine();
 
                                 System.out.println(msg.checkMessage(text));
@@ -120,6 +120,7 @@ public class Main {
                             }
 
                             System.out.println("\nTotal messages sent: " + totalSent);
+                          
 
                             break;
 
