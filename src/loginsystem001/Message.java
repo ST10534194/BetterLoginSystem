@@ -19,14 +19,14 @@ public class Message {
     private String messageText;
     private String messageHash;
 
-    // Generate random 10 digit ID
+    
     public String generateMessageID() {
         Random random = new Random();
         long number = 1000000000L + (long)(random.nextDouble() * 9000000000L);
         return String.valueOf(number);
     }
 
-    // Check message length
+    
     public String checkMessage(String message) {
 
         if (message.length() <= 250) {
@@ -37,17 +37,17 @@ public class Message {
         }
     }
 
-    // Check recipient number
+    
     public String checkRecipientCell(String recipient) {
 
         if (recipient.matches("^\\+27\\d{9}$")) {
             return "Cell phone number successfully captured.";
         } else {
-            return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
+            return "Cell phone number is incorrectly formatted or does not contain an international code (+27..). Please correct the number and try again.";
         }
     }
 
-    // Create message hash
+    
     public String createMessageHash(String messageID, int messageNumber, String message) {
 
         String[] words = message.split(" ");
@@ -63,7 +63,7 @@ public class Message {
         return hash;
     }
 
-    // Send/store/disregard
+    
     public String sentMessage(int option) {
 
         if (option == 1) {
@@ -78,7 +78,7 @@ public class Message {
         }
     }
 
-    // Print message details
+   
     public String printMessages() {
 
         return "Message ID: " + messageID
@@ -87,12 +87,12 @@ public class Message {
                 + "\nMessage: " + messageText;
     }
 
-    // Return total messages
+    
     public int returnTotalMessages() {
         return totalMessages;
     }
 
-    // Set message details
+   
     public void setMessageDetails(String recipient, String messageText, int messageNumber) {
 
         this.messageID = generateMessageID();
