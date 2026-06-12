@@ -41,6 +41,17 @@ This project was developed as part of the Programming POE assignment.
 - Total messages counter
 - JUnit testing
 
+## Part 3 – Advanced Reporting & Management
+- Parallel array architecture for global message tracking
+- Display all saved senders and recipients
+- Find and display the longest message saved
+- Search and view messages via unique Message ID
+- Filter and view all messages linked to a specific recipient cell number
+- Delete messages across all arrays using unique Hash Key
+- Print complete system report
+- Instant mock test data population feature
+- Automated JUnit testing for all data handling algorithms
+
 ---
 
 # Technologies Used
@@ -73,6 +84,8 @@ Handles:
 - Recipient validation
 - JSON storage
 - Message actions
+- Parallel array data tracking
+- Advanced search and reporting algorithms
 
 ### Main.java
 Handles:
@@ -80,6 +93,7 @@ Handles:
 - Menu system
 - Loops
 - Application flow
+- Interactive report sub-menu
 
 ---
 
@@ -103,6 +117,8 @@ The application includes automated JUnit tests for:
 - Message validation
 - Message hash generation
 - Message options
+- Array data population and validation
+- Message search, display, and deletion algorithms
 
 ---
 
@@ -177,4 +193,9 @@ https://github.com/ST10534194/BetterLoginSystem.git
 
 Youtube Video Link 
 
+PART 2:
 https://youtu.be/aV4hJzSptqQ?si=tTOssZWij8MpT2Vh
+
+PART 3:
+https://youtu.be/bNY1CvZuYdY
+
