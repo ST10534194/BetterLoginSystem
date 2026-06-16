@@ -14,6 +14,21 @@ import java.util.Random;
 
 public class Message {
 
+    // --- PART 3 ADDITIONS: Global parallel tracking structures ---
+    private static final int MAX_LIMIT = 20;
+    
+    public static String[] sentMessagesArray = new String[MAX_LIMIT];
+    public static String[] disregardedMessagesArray = new String[MAX_LIMIT];
+    public static String[] storedMessagesArray = new String[MAX_LIMIT];
+    public static String[] messageHashArray = new String[MAX_LIMIT];
+    public static String[] messageIdArray = new String[MAX_LIMIT];
+    public static String[] recipientArray = new String[MAX_LIMIT]; 
+    
+    private static int sentCount = 0;
+    private static int disregardCount = 0;
+    private static int storedCount = 0;
+    private static int totalGlobalCount = 0; // Tracks global parallel layout indexes
+
     private static int totalMessages = 0;
 
     private String messageID;
@@ -73,14 +88,33 @@ public class Message {
         }
     }
 
+    // PART 3 ADJUSTMENT: Automatically logs details to parallel arrays upon choosing options
     public String sentMessage(int option) {
+        if (totalGlobalCount < MAX_LIMIT) {
+            messageIdArray[totalGlobalCount] = this.messageID;
+            messageHashArray[totalGlobalCount] = this.messageHash;
+            recipientArray[totalGlobalCount] = this.recipient;
+        }
+
         if (option == 1) {
+            if (sentCount < MAX_LIMIT) {
+                sentMessagesArray[sentCount++] = this.messageText;
+            }
+            totalGlobalCount++;
             totalMessages++;
             return "Message successfully sent.";
         } else if (option == 2) {
+            if (disregardCount < MAX_LIMIT) {
+                disregardedMessagesArray[disregardCount++] = this.messageText;
+            }
+            totalGlobalCount++;
             return "Press 0 to delete message.";
         } else if (option == 3) {
+            if (storedCount < MAX_LIMIT) {
+                storedMessagesArray[storedCount++] = this.messageText;
+            }
             storeMessage(); // <--- Automatically triggers the JSON file generation
+            totalGlobalCount++;
             return "Message successfully stored.";
         } else {
             return "Invalid option.";
@@ -111,5 +145,105 @@ public class Message {
 
     public String getMessageHash() {
         return messageHash;
+    }
+
+    // =================================================================
+    //   PART 3 ASSIGNMENT ALGORITHMIC REQUIREMENTS
+    // =================================================================
+
+    // 2b. Display the longest stored/handled message text
+    public String findLongestMessage() {
+        String longest = "";
+        for (int i = 0; i < totalGlobalCount; i++) {
+            String currentText = null;
+            if (sentMessagesArray[i] != null) currentText = sentMessagesArray[i];
+            else if (storedMessagesArray[i] != null) currentText = storedMessagesArray[i];
+            else if (disregardedMessagesArray[i] != null) currentText = disregardedMessagesArray[i];
+            
+            if (currentText != null && currentText.length() > longest.length()) {
+                longest = currentText;
+            }
+        }
+        return longest.isEmpty() ? "No messages logged in system." : longest;
+    }
+
+    // 2c. Match Message ID and print structural recipient + content pairs
+    public String searchByMessageId(String id) {
+        for (int i = 0; i < totalGlobalCount; i++) {
+            if (messageIdArray[i] != null && messageIdArray[i].equals(id)) {
+                String msgText = "Disregarded / Logged out";
+                if (sentMessagesArray[i] != null) msgText = sentMessagesArray[i];
+                else if (storedMessagesArray[i] != null) msgText = storedMessagesArray[i];
+                else if (disregardedMessagesArray[i] != null) msgText = disregardedMessagesArray[i];
+                
+                return "Recipient: " + recipientArray[i] + "\nMessage: \"" + msgText + "\"";
+            }
+        }
+        return "Message ID not found.";
+    }
+
+    // 2d. Filter and match multiple message texts bound to a single recipient cell
+    public String searchAllByRecipient(String targetRecipient) {
+        StringBuilder results = new StringBuilder();
+        boolean found = false;
+        for (int i = 0; i < totalGlobalCount; i++) {
+            if (recipientArray[i] != null && recipientArray[i].equals(targetRecipient)) {
+                String msgText = null;
+                if (sentMessagesArray[i] != null) msgText = sentMessagesArray[i];
+                else if (storedMessagesArray[i] != null) msgText = storedMessagesArray[i];
+                else if (disregardedMessagesArray[i] != null) msgText = disregardedMessagesArray[i];
+                
+                if (msgText != null) {
+                    if (found) results.append(" ");
+                    results.append("\"").append(msgText).append("\"");
+                    found = true;
+                }
+            }
+        }
+        return found ? results.toString() : "No history found for recipient.";
+    }
+
+    // 2e. Wipe structural fields by matching its cryptographic text layout key
+    public String deleteByHash(String hash) {
+        for (int i = 0; i < totalGlobalCount; i++) {
+            if (messageHashArray[i] != null && messageHashArray[i].equals(hash)) {
+                String targetsText = "Unknown/Empty";
+                if (sentMessagesArray[i] != null) targetsText = sentMessagesArray[i];
+                else if (storedMessagesArray[i] != null) targetsText = storedMessagesArray[i];
+                else if (disregardedMessagesArray[i] != null) targetsText = disregardedMessagesArray[i];
+                
+                // Clear index links
+                messageIdArray[i] = null;
+                messageHashArray[i] = null;
+                recipientArray[i] = null;
+                sentMessagesArray[i] = null;
+                storedMessagesArray[i] = null;
+                disregardedMessagesArray[i] = null;
+                
+                return "Message: \"" + targetsText + "\" successfully deleted.";
+            }
+        }
+        return "Message hash not found.";
+    }
+
+    // 2f. Format and print a clean full report dump
+    public String generateReport() {
+        StringBuilder report = new StringBuilder();
+        report.append("\n====================== SYSTEM REPORT ======================\n");
+        boolean recordsExist = false;
+        for (int i = 0; i < totalGlobalCount; i++) {
+            if (messageHashArray[i] != null) {
+                String msgText = "Disregarded";
+                if (sentMessagesArray[i] != null) msgText = sentMessagesArray[i];
+                else if (storedMessagesArray[i] != null) msgText = storedMessagesArray[i];
+                
+                report.append("HASH: ").append(messageHashArray[i]).append("\n")
+                      .append("RECIPIENT: ").append(recipientArray[i]).append("\n")
+                      .append("MESSAGE: ").append(msgText).append("\n")
+                      .append("-----------------------------------------------------------\n");
+                recordsExist = true;
+            }
+        }
+        return recordsExist ? report.toString() : "No active message structures saved in report layout logs.";
     }
 }
